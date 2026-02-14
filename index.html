@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Tester</title>
+    <style>
+        :root {
+            --primary-pink: #ff005c;
+            --bg-light: #fff0f5;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .app-container {
+            width: 360px;
+            height: 640px;
+            background: var(--bg-light);
+            text-align: center;
+            padding: 25px;
+            position: relative;
+            box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .quote-wrapper {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .quote-box {
+            border-radius: 20px;
+            padding: 25px;
+            background-image: linear-gradient(to bottom right, rgb(255, 41, 148), rgba(255, 0, 106, 0.986));
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--white);
+            line-height: 1.5;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 30px 0;
+            width: 100%;
+        }
+
+        .input-group input {
+            width: 90px;
+            flex: 1;
+            max-width: 120px;
+            padding: 12px;
+            border-radius: 25px;
+            border: 1.5px solid #eee;
+            text-align: center;
+            outline: none;
+        }
+
+        .heart-icon {
+            background: var(--primary-pink);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(255, 0, 92, 0.2);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 92, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(255, 0, 92, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 92, 0); }
+        }
+
+        .result-card {
+            display: none;
+            background: var(--primary-pink);
+            color: var(--white);
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            border-radius: 40px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .percentage {
+            font-size: 65px;
+            font-weight: 800;
+        }
+
+        #status-text {
+            color: var(--primary-pink);
+            font-weight: 700;
+            font-style: italic;
+            margin: 15px 0;
+            font-size: 18px;
+            min-height: 24px;
+        }
+
+        .main-btn {
+            background: var(--primary-pink);
+            color: var(--white);
+            border: none;
+            padding: 16px 0;
+            border-radius: 35px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 50%;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        .secondary-btns {
+            display: none;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .share-btn {
+            background: none;
+            border: none;
+            color: var(--primary-pink);
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .ad-overlay {
+            display: none;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .ad-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            padding: 20px 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 18px;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .close-ad {
+            position: absolute;
+            top: 10px; right: 10px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px; height: 32px;
+            cursor: pointer;
+            font-size: 20px;
+            display: none;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 15px 0;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        canvas { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="logo">
+        <img src="C:\Users\ICETECH\Documents\Ota Luv\img\logo.png" alt="Logo">
+    </div>
+
+    <div id="quote-area" class="quote-wrapper">
+        <div class="quote-box" id="display-quote">
+            Love is a beautiful thing, he who ever finds love find a good thing...
+        </div>
+    </div>
+
+    <div class="input-group">
+        <input type="text" id="hisName" placeholder="His Name">
+        <div class="heart-icon">❤</div>
+        <input type="text" id="herName" placeholder="Her Name">
+    </div>
+
+    <div id="result-box" class="result-card">
+        <div class="percentage" id="percent-text">0%</div>
+    </div>
+    
+    <div id="status-text" style="display: none;"></div>
+
+    <button class="main-btn" id="test-btn" onclick="runTest()">Test</button>
+
+    <div class="secondary-btns" id="post-test-btns">
+        <button class="main-btn" style="width: 140px; margin: 0;" onclick="showAd()">Re-Test</button>
+        <button class="share-btn" onclick="downloadImage()">Share</button>
+    </div>
+
+    <div class="ad-overlay" id="ad-popup">
+        <div class="ad-content">
+            <button class="close-ad" id="close-ad-btn" onclick="location.reload()">×</button>
+            <h2 style="color: var(--primary-pink);">Need a professional <br>Website or App?</h2>
+            <a href="https://wa.me/message/76KNE73P5OETM1" target="_blank" class="whatsapp-btn">
+                Lets Chat Now
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p style="margin: 5px; color: #686868;">
+            For a professional website design 
+            <a href="https://wa.me/message/76KNE73P5OETM1" style="color: var(--primary-pink); text-decoration: none; font-weight: bold;">
+                Contact Us
+            </a>
+        </p>
+        <p style="margin: 5px; color: #929292;">© 2026 OtaLuv. Made with love. <br>All rights reserved.</p>
+    </footer>
+</div>
+
+<canvas id="shareCanvas" width="400" height="600"></canvas>
+
+<script>
+    const quotes = [
+        "You didn’t steal my heart… I handed it to you with a smile.",
+        "If love were a language, you’d be my favorite word.",
+        "You must be magic, because life feels better with you in it.",
+        "I looked at you and suddenly the world made sense.",
+        "You’re my favorite notification.",
+        "You + Me = My kind of forever.",
+        "Even chocolate gets jealous of how sweet you are.",
+        "I fall for you a little more every single day.",
+        "If kisses were stars, I’d give you the sky.",
+        "You are my sunshine on every cloudy day.",
+        "My heart whispered your name before I even knew it.",
+        "Love is cute. But us? We’re adorable.",
+        "You’re my dream that decided to stay.",
+        "If love had a face, it would look like you."
+    ];
+
+    let quoteInterval = setInterval(displayNewQuote, 5000);
+
+    function displayNewQuote() {
+        const qBox = document.getElementById('display-quote');
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        qBox.style.opacity = 0;
+        setTimeout(() => {
+            qBox.innerText = randomQuote;
+            qBox.style.opacity = 1;
+        }, 600);
+    }
+
+    function getResultStatus(percent) {
+        if (percent >= 95) return '"Soulmates Forever"';
+        if (percent >= 85) return '"Perfect for each other"';
+        if (percent >= 75) return '"A Match Made in Heaven"';
+        if (percent >= 65) return '"Beautiful Connection"';
+        if (percent >= 55) return '"Chosen to Love"';
+        if (percent >= 45) return '"You Found Love"';
+        return '"Strong Potential"';
+    }
+
+    function runTest() {
+        const his = document.getElementById('hisName').value.trim();
+        const her = document.getElementById('herName').value.trim();
+
+        if(!his || !her) {
+            alert("Please enter both names!");
+            return;
+        }
+
+        clearInterval(quoteInterval);
+        document.getElementById('test-btn').style.display = 'none';
+        document.getElementById('quote-area').style.display = 'none';
+        document.getElementById('result-box').style.display = 'flex';
+        
+        let count = 0;
+        const target = Math.floor(Math.random() * 51) + 45; 
+        
+        const counter = setInterval(() => {
+            if (count >= target) {
+                clearInterval(counter);
+                showFinal(target);
+            } else {
+                count++;
+                document.getElementById('percent-text').innerText = count + "%";
+            }
+        }, 40);
+    }
+
+    function showFinal(finalPercent) {
+        const status = getResultStatus(finalPercent);
+        const statusEl = document.getElementById('status-text');
+        statusEl.innerText = status;
+        statusEl.style.display = 'block';
+        document.getElementById('post-test-btns').style.display = 'flex';
+    }
+
+    function showAd() {
+        const ad = document.getElementById('ad-popup');
+        const closeBtn = document.getElementById('close-ad-btn');
+        ad.style.display = 'flex';
+        setTimeout(() => { closeBtn.style.display = 'block'; }, 3000);
+    }
+
+    function downloadImage() {
+        const canvas = document.getElementById('shareCanvas');
+        const ctx = canvas.getContext('2d');
+        const score = document.getElementById('percent-text').innerText;
+        const status = document.getElementById('status-text').innerText;
+        const names = `${document.getElementById('hisName').value} & ${document.getElementById('herName').value}`;
+        
+        const logoImg = new Image();
+        // Try to load the logo
+        logoImg.src = "ota luv/img/logo.png"; // Recommended: Keep logo in an 'img' folder next to your HTML
+
+        // This function runs if the logo loads successfully
+        logoImg.onload = function() {
+            drawCanvas(true);
+        };
+
+        // This function runs if the logo fails to load (prevents the button from breaking)
+        logoImg.onerror = function() {
+        console.warn("Logo could not be loaded from path. Generating result without logo.");
+            drawCanvas(false);
+        };
+
+    function drawCanvas(withLogo) {
+        // 1. Background
+        ctx.fillStyle = "#fff0f5";
+        ctx.fillRect(0, 0, 400, 600);
+
+        // 2. Draw Logo if available
+        if (withLogo) {
+            const logoWidth = 120;
+            const logoHeight = (logoImg.height / logoImg.width) * logoWidth;
+            ctx.drawImage(logoImg, 200 - (logoWidth / 2), 30, logoWidth, logoHeight);
+        }
+
+        // 3. Title
+        ctx.fillStyle = "#ff005c";
+        ctx.font = "italic bold 30px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("Love Test Result", 200, withLogo ? 150 : 100);
+
+        // 4. Result Card (The Pink Box)
+        ctx.beginPath();
+        ctx.roundRect(80, withLogo ? 190 : 150, 240, 240, 40);
+        ctx.fillStyle = "#ff005c";
+        ctx.fill();
+
+        // 5. Percentage Text
+        ctx.fillStyle = "white";
+        ctx.font = "bold 85px Arial";
+        ctx.fillText(score, 200, withLogo ? 335 : 295);
+
+        // 6. Names and Status
+        ctx.fillStyle = "#ff005c";
+        ctx.font = "bold 24px Arial";
+        ctx.fillText(names, 200, withLogo ? 480 : 440);
+        ctx.font = "italic 20px Arial";
+        ctx.fillText(status, 200, withLogo ? 520 : 480);
+
+        // 7. Footer Watermark
+        ctx.font = "15px Arial";
+        ctx.fillStyle = "#F95D57";
+        ctx.fillText("From Luvtester.fun", 200, 575);
+
+        // 8. Trigger the actual download
+        try {
+            const link = document.createElement('a');
+            link.download = `Love_Result_${names.replace(/\s/g, '_')}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        } catch (err) {
+            console.error("Canvas Export Error:", err);
+            alert("Could not generate image. If you are using a local file path for the logo, try moving the logo to the same folder as this HTML file.");
+        }
+    }
+}
+</script>
+</body>
+</html>
