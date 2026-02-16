@@ -400,12 +400,6 @@
             ctx.drawImage(logoImg, 200 - (logoWidth / 2), 30, logoWidth, logoHeight);
         }
 
-        // 3. Title
-        ctx.fillStyle = "#ff005c";
-        ctx.font = "italic bold 30px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText("Love Test Result", 200, withLogo ? 150 : 100);
-
         // 4. Result Card (The Pink Box)
         ctx.beginPath();
         ctx.roundRect(80, withLogo ? 190 : 150, 240, 240, 40);
@@ -427,7 +421,7 @@
         // 7. Footer Watermark
         ctx.font = "15px Arial";
         ctx.fillStyle = "#F95D57";
-        ctx.fillText("From Luvtester.fun", 200, 575);
+        ctx.fillText("Luvtester.fun", 200, 575);
 
         // 8. Trigger the actual download
         try {
@@ -445,3 +439,4 @@
 </body>
 
 </html>
+
