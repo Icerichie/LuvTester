@@ -399,7 +399,13 @@
             const logoHeight = (logoImg.height / logoImg.width) * logoWidth;
             ctx.drawImage(logoImg, 200 - (logoWidth / 2), 30, logoWidth, logoHeight);
         }
-
+        
+        // 3. Title
+        ctx.fillStyle = "#ff005c";
+        ctx.font = "bold 2px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("", 200, withLogo ? 150 : 100);
+        
         // 4. Result Card (The Pink Box)
         ctx.beginPath();
         ctx.roundRect(80, withLogo ? 190 : 150, 240, 240, 40);
