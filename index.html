@@ -252,6 +252,8 @@
     </div>
     
     <div id="status-text" style="display: none;"></div>
+    
+    <div id="error-msg" style="color: #ff005c; font-size: 13px; margin-bottom: 10px; min-height: 30px;"></div>
 
     <button class="main-btn" id="test-btn" onclick="runTest()">Test</button>
 
@@ -323,34 +325,47 @@
         return '"Strong Potential"';
     }
 
-    function runTest() {
-        const his = document.getElementById('hisName').value.trim();
-        const her = document.getElementById('herName').value.trim();
+function runTest() {
+    const his = document.getElementById('hisName').value.trim();
+    const her = document.getElementById('herName').value.trim();
+    const errorEl = document.getElementById('error-msg');
+    
+    // Regex: Allows only letters and spaces
+    const namePattern = /^[A-Za-z\s]+$/;
 
-        if(!his || !her) {
-            alert("Please enter both names!");
-            return;
-        }
+    // Reset error message
+    errorEl.innerText = "";
 
-        clearInterval(quoteInterval);
-        document.getElementById('test-btn').style.display = 'none';
-        document.getElementById('quote-area').style.display = 'none';
-        document.getElementById('result-box').style.display = 'flex';
-        
-        let count = 0;
-        const target = Math.floor(Math.random() * 51) + 45; 
-        
-        const counter = setInterval(() => {
-            if (count >= target) {
-                clearInterval(counter);
-                showFinal(target);
-            } else {
-                count++;
-                document.getElementById('percent-text').innerText = count + "%";
-            }
-        }, 40);
+    if (!his || !her) {
+        errorEl.innerText = "Please enter both names!";
+        return;
     }
 
+    if (!namePattern.test(his) || !namePattern.test(her)) {
+        errorEl.innerText = "Letters only! No numbers or symbols.";
+        return;
+    }
+
+    // If validation passes, proceed with the test
+    clearInterval(quoteInterval);
+    document.getElementById('test-btn').style.display = 'none';
+    document.getElementById('quote-area').style.display = 'none';
+    document.getElementById('input-area').style.display = 'none'; // Hide inputs too
+    document.getElementById('result-box').style.display = 'flex';
+    
+    let count = 0;
+    const target = Math.floor(Math.random() * 51) + 45; 
+    
+    const counter = setInterval(() => {
+        if (count >= target) {
+            clearInterval(counter);
+            showFinal(target);
+        } else {
+            count++;
+            document.getElementById('percent-text').innerText = count + "%";
+        }
+    }, 40);
+}
     function showFinal(finalPercent) {
         const status = getResultStatus(finalPercent);
         const statusEl = document.getElementById('status-text');
@@ -445,4 +460,5 @@
 </body>
 
 </html>
+
 
