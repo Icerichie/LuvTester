@@ -329,8 +329,9 @@ function runTest() {
     const his = document.getElementById('hisName').value.trim();
     const her = document.getElementById('herName').value.trim();
     const errorEl = document.getElementById('error-msg');
+    const inputArea = document.getElementById('input-area');
     
-    // Regex: Allows only letters and spaces
+    // Regex: Only letters and spaces
     const namePattern = /^[A-Za-z\s]+$/;
 
     // Reset error message
@@ -346,11 +347,15 @@ function runTest() {
         return;
     }
 
-    // If validation passes, proceed with the test
+    // Process Test
     clearInterval(quoteInterval);
     document.getElementById('test-btn').style.display = 'none';
     document.getElementById('quote-area').style.display = 'none';
-    document.getElementById('input-area').style.display = 'none'; // Hide inputs too
+    
+    // Safety check to hide inputs
+    if(inputArea) inputArea.style.display = 'none';
+    errorEl.style.display = 'none';
+    
     document.getElementById('result-box').style.display = 'flex';
     
     let count = 0;
@@ -460,5 +465,6 @@ function runTest() {
 </body>
 
 </html>
+
 
 
