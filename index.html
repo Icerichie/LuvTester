@@ -227,65 +227,8 @@
 
         canvas { display: none; }
     </style>
-</head>
-<body>
 
-<div class="app-container">
-    <div class="logo">
-        <img src="img\logo.png" alt="Logo">
-    </div>
-
-    <div id="quote-area" class="quote-wrapper">
-        <div class="quote-box" id="display-quote">
-            Love is a beautiful thing, he who ever finds love find a good thing...
-        </div>
-    </div>
-
-    <div class="input-group">
-        <input type="text" id="hisName" placeholder="His Name">
-        <div class="heart-icon">❤</div>
-        <input type="text" id="herName" placeholder="Her Name">
-    </div>
-
-    <div id="result-box" class="result-card">
-        <div class="percentage" id="percent-text">0%</div>
-    </div>
-    
-    <div id="status-text" style="display: none;"></div>
-    
-    <div id="error-msg" style="color: #ff005c; font-size: 13px; margin-bottom: 10px; min-height: 30px;"></div>
-
-    <button class="main-btn" id="test-btn" onclick="runTest()">Test</button>
-
-    <div class="secondary-btns" id="post-test-btns">
-        <button class="main-btn" style="width: 140px; margin: 0;" onclick="showAd()">Re-Test</button>
-        <button class="share-btn" onclick="downloadImage()">Share</button>
-    </div>
-
-    <div class="ad-overlay" id="ad-popup">
-        <div class="ad-content">
-            <button class="close-ad" id="close-ad-btn" onclick="location.reload()">×</button>
-            <h2 style="color: var(--primary-pink);">Need a professional <br>Website or App?</h2>
-            <a href="https://wa.me/message/76KNE73P5OETM1" target="_blank" class="whatsapp-btn">
-                Book Now
-            </a>
-        </div>
-    </div>
-
-    <footer>
-        <p style="margin: 5px; color: #686868;">
-            Click to
-            <a href="https://wa.me/message/76KNE73P5OETM1" style="color: var(--primary-pink); text-decoration: none; font-weight: bold;">
-                Find Love
-            </a>
-        </p>
-        <p style="margin: 5px; color: #929292;">© 2026 LuvTester. Made with love. <br>All rights reserved.</p>
-    </footer>
-</div>
-
-<canvas id="shareCanvas" width="400" height="600"></canvas>
-
-<script>
+    <script>
     const quotes = [
         "You didn’t steal my heart… I handed it to you with a smile.",
         "If love were a language, you’d be my favorite word.",
@@ -462,9 +405,68 @@ function runTest() {
     }
 }
 </script>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="logo">
+        <img src="img\logo.png" alt="Logo">
+    </div>
+
+    <div id="quote-area" class="quote-wrapper">
+        <div class="quote-box" id="display-quote">
+            Love is a beautiful thing, he who ever finds love find a good thing...
+        </div>
+    </div>
+
+    <div class="input-group">
+        <input type="text" id="hisName" placeholder="His Name">
+        <div class="heart-icon">❤</div>
+        <input type="text" id="herName" placeholder="Her Name">
+    </div>
+
+    <div id="result-box" class="result-card">
+        <div class="percentage" id="percent-text">0%</div>
+    </div>
+    
+    <div id="status-text" style="display: none;"></div>
+    
+    <div id="error-msg" style="color: #ff005c; font-size: 13px; margin-bottom: 10px; min-height: 30px;"></div>
+
+    <button class="main-btn" id="test-btn" onclick="runTest()">Test</button>
+
+    <div class="secondary-btns" id="post-test-btns">
+        <button class="main-btn" style="width: 140px; margin: 0;" onclick="showAd()">Re-Test</button>
+        <button class="share-btn" onclick="downloadImage()">Share</button>
+    </div>
+
+    <div class="ad-overlay" id="ad-popup">
+        <div class="ad-content">
+            <button class="close-ad" id="close-ad-btn" onclick="location.reload()">×</button>
+            <h2 style="color: var(--primary-pink);">Need a professional <br>Website or App?</h2>
+            <a href="https://wa.me/message/76KNE73P5OETM1" target="_blank" class="whatsapp-btn">
+                Book Now
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p style="margin: 5px; color: #686868;">
+            Click to
+            <a href="https://wa.me/message/76KNE73P5OETM1" style="color: var(--primary-pink); text-decoration: none; font-weight: bold;">
+                Find Love
+            </a>
+        </p>
+        <p style="margin: 5px; color: #929292;">© 2026 LuvTester. Made with love. <br>All rights reserved.</p>
+    </footer>
+</div>
+
+<canvas id="shareCanvas" width="400" height="600"></canvas>
+
 </body>
 
 </html>
+
 
 
 
